@@ -1,7 +1,7 @@
 terraform {
     required_providers {
         redis = {
-            source = "local/rdeavila94/redis"
+            source = "local/xiwenc/redis"
             version = "~> 0.0"
         }
     }
