@@ -19,8 +19,8 @@ terraform init
 
 1. Download the latest release for your platform
 2. Extract the binary to your Terraform plugins directory:
-   - Linux/macOS: `~/.terraform.d/plugins/registry.terraform.io/rdeavila94/redis/`
-   - Windows: `%APPDATA%\terraform.d\plugins\registry.terraform.io\rdeavila94\redis\`
+   - Linux/macOS: `~/.terraform.d/plugins/registry.terraform.io/xiwenc/redis/`
+   - Windows: `%APPDATA%\terraform.d\plugins\registry.terraform.io\xiwenc\redis\`
 
 ## Usage
 
@@ -30,7 +30,7 @@ terraform init
 terraform {
   required_providers {
     redis = {
-      source  = "rdeavila94/redis"
+      source  = "xiwenc/redis"
       version = "~> 0.0"
     }
   }
@@ -115,7 +115,7 @@ Currently, this provider does not include data sources.
 terraform {
   required_providers {
     redis = {
-      source  = "rdeavila94/redis"
+      source  = "xiwenc/redis"
       version = "~> 0.0"
     }
   }
@@ -172,7 +172,7 @@ resource "redis_user" "admin_user" {
 ### Building from Source
 
 ```bash
-git clone https://github.com/rdeavila94/terraform-provider-redis
+git clone https://github.com/xiwenc/terraform-provider-redis
 cd terraform-provider-redis
 make build
 ```
