@@ -67,6 +67,42 @@ resource "redis_string" "example" {
 - `value` - The stored value
 - `overridable` - Whether the key can override existing values
 
+#### `redis_user`
+
+Manages a Redis user with ACL permissions (requires Redis 6.0+).
+
+```hcl
+resource "redis_user" "example" {
+  username       = "app_user"
+  password       = "secure_password"
+  enabled        = true
+  keys           = ["app:*", "cache:*"]
+  commands       = ["+@read", "+@write", "-@dangerous"]
+  channels       = ["news:*", "events:*"]
+  reset_keys     = false
+  reset_channels = false
+  reset_commands = false
+}
+```
+
+**Arguments:**
+
+- `username` (Required) - The name of the Redis user
+- `password` (Optional) - The password for the user. Set to empty string for passwordless authentication
+- `enabled` (Optional) - Whether the user is enabled. Defaults to `true`
+- `keys` (Optional) - List of key patterns the user can access (e.g., "cache:*")
+- `commands` (Optional) - List of commands or command categories the user can execute (e.g., "+@read", "+get", "-@dangerous")
+- `channels` (Optional) - List of Pub/Sub channel patterns the user can access
+- `reset_keys` (Optional) - Whether to reset key permissions before applying new ones. Defaults to `false`
+- `reset_channels` (Optional) - Whether to reset channel permissions before applying new ones. Defaults to `false`
+- `reset_commands` (Optional) - Whether to reset command permissions before applying new ones. Defaults to `false`
+
+**Attributes:**
+
+- `id` - The Redis username
+- `username` - The Redis username
+- All other arguments are also exported as attributes
+
 ### Data Sources
 
 Currently, this provider does not include data sources.
@@ -110,6 +146,26 @@ resource "redis_string" "existing_key" {
 }
 ```
 
+### Redis User with ACL Permissions
+
+```hcl
+resource "redis_user" "readonly_user" {
+  username  = "readonly"
+  password  = "password123"
+  enabled   = true
+  keys      = ["app:*", "cache:*"]
+  commands  = ["+@read", "-@write", "-@admin"]
+  channels  = ["notifications:*"]
+}
+
+resource "redis_user" "admin_user" {
+  username  = "admin"
+  password  = "secure_admin_password"
+  enabled   = true
+  commands  = ["+@all"]
+  keys      = ["*"]
+}
+```
 
 ## Development
 

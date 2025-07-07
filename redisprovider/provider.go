@@ -23,6 +23,7 @@ func Provider() *schema.Provider {
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"redis_string": resourceRedisString(),
+			"redis_user":   resourceRedisUser(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}
@@ -39,4 +40,4 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 		return nil, diag.Errorf("Failed to connect to Redis: %s", err)
 	}
 	return &ProviderConfig{RedisClient: client}, nil
-} 
+}
